@@ -37,7 +37,7 @@ open_assigned_length as (
         task.completed_at,
         assignments.last_assigned_at as last_assigned_at,
         {{ dbt_utils.datediff('task.created_at', open_until, 'day') }} as days_open,
-        {{ dbt_utils.datediff('assignments.last_assigned_at', open_until, 'day') }} as days_assigned
+        {{ dbt_utils.datediff('assignments.last_assigned_at', open_until, 'day') }} as days_assigned --hmm, I'm trying to think of a better name, as this will only be the time it was open and assigned to the last person right? Or will this be a combination of all assigned time?
 
     from task
     left join assignments 

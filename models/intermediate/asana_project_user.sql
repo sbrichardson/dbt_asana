@@ -1,23 +1,19 @@
+-- Note all references to staging tables should be reformatted as variables : {{ ref('stg_asana_project_task') }} --> {{ var('project_task') }}  
+-- this is needed now that the update to the dbt_project.yml file has been updated with the variables.
+-- this note applies to all model files :)
+
 with project_tasks as (
     
     select *
-    from {{ ref('stg_asana_project_task') }}
+    from {{ var('project_task') }}  
 ),
 
 -- pull tags to connect projects <> users
-tasks as (
+assigned_tasks as (
     
     select * 
     from {{ ref('stg_asana_task') }}
-),
-
-assigned_tasks as (
-    
-    select *
-    from tasks
-
     where assignee_user_id is not null
-    
 ),
 
 project as (

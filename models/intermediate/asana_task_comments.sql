@@ -1,15 +1,8 @@
-with story as (
+with comments as (
     
     select *
     from {{ ref('asana_task_story') }}
-
-),
-
-comments as (
-
-    select * 
-    from story
-    where comment_content is not null
+    where comment_content is not null -- if the initial logic is pretty simple, feel free to simplify, like so
 
 ),
 

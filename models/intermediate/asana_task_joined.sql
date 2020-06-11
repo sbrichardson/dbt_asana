@@ -1,3 +1,6 @@
+-- I feel like this should be a final model, not an intermediate. It feels like this is extremely valuable already!
+-- Not sure what else you wanted to include in an enriched task table, but this is looking great.
+
 with task as (
     select *
     from {{ ref('stg_asana_task') }}
@@ -104,7 +107,8 @@ task_join as (
 
 
     from
-    task
+    task 
+    -- do all of these need to be left joins, or can they be joins? 
     left join task_comments on task.task_id = task_comments.task_id
     left join task_followers on task.task_id = task_followers.task_id
     left join task_open_length on task.task_id = task_open_length.task_id

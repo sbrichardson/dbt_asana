@@ -3,17 +3,29 @@ config-version: 2
 name: 'asana'
 version: '0.0.1'
 
-require-dbt-version: [">=0.16.0", "<0.18.0"]
+require-dbt-version: '>=0.17.0'
 
 models:
     asana:
-        materialized: table # ephemeral after testing
+        materialized: table
         # intermediate:
         #     materialized: ephemeral 
 
-# vars:
-#     asana:
-
+# all source references are extracted as variables. This enables users to use just reference other source tables if they choose to.
+# I don't expect this to be common, but this allows them to overwrite the source tables easily if they choose to
+vars:
+    asana: 
+        project_task: "{{ ref('stg_asana_project_task') }}"
+        project: "{{ ref('stg_asana_project') }}"
+        section: "{{ ref('stg_asana_section') }}"
+        story: "{{ ref('stg_asana_story') }}"
+        tag: "{{ ref('stg_asana_tag') }}"
+        task_follower: "{{ ref('stg_asana_task_follower') }}"
+        task_section: "{{ ref('stg_asana_task_section') }}"
+        task_tag: "{{ ref('stg_asana_task_tag') }}"
+        task: "{{ ref('stg_asana_task') }}"
+        team: "{{ ref('stg_asana_team') }}"
+        user: "{{ ref('stg_asana_user') }}"
 
 # delete profile after testing
 profile: dev_bigquery_dbt_testing
